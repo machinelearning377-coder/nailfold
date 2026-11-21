@@ -240,6 +240,3 @@ The experiments address **Healthy vs. T2DM** using the available nailfold datase
 
 The implementation uses [Ultralytics YOLO11](https://github.com/ultralytics/ultralytics), [DINOv2](https://github.com/facebookresearch/dinov2), [Hugging Face Transformers](https://huggingface.co/docs/transformers), and PyTorch. Follow each source project's applicable license and usage terms.
 
-## License
-
-**No code license has been specified by the manuscript or the uploaded files.** The repository owner should add a `LICENSE` file once the intended open-source terms are selected. Dataset and pretrained model licensing are separate from the code license.
