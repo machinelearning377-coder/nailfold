@@ -58,7 +58,8 @@ Data are downloaded from the original publisher, not included in this repository
 ├── requirements.txt
 ├── .gitignore
 └── assets/
-    └── methodology.png         # Methodology figure reproduced from the paper
+    ├── methodology.png         # Methodology figure reproduced from the paper
+    └── implementation_architecture.png  # Detailed implementation schematic
 ```
 
 The supplied Python files were renamed for consistent imports. In particular, `evaluation.py` imports models and utility functions from `methodology.py`. **The underlying Python code has not been altered.**
@@ -150,7 +151,19 @@ The evaluation script loads the saved checkpoints, evaluates morphology, static-
 
 The final disease evaluation calculates image-level AUROC and participant-level AUROC. Participant-level probabilities are computed by **averaging predictions across each participant's images**. Binary predictions use a **0.50 threshold** for accuracy, balanced accuracy, precision, recall, and F1-score. The independent test partition is evaluated separately from training/validation.
 
-## Model implementation details
+## Implementation Details and Model Architecture
+
+The following implementation schematic illustrates the morphology-localization pathway, DINOv2-based structural representation learning, static-image classification, video-based temporal regularization, and final parameter-efficient adaptation. It complements the methodology overview above by highlighting the model components, input dimensions, and LoRA configuration.
+
+<p align="center">
+  <img src="assets/implementation_architecture.png" alt="Detailed model implementation architecture showing capillary morphology localization with YOLO11s, DINOv2-Small morphology-to-disease knowledge transfer, eight-frame temporal modeling, and a final image-only LoRA-adapted classifier." width="100%">
+</p>
+
+*Implementation architecture schematic. Temporal information regularizes the shared image encoder during training; the trained model performs Healthy-versus-T2DM inference from an individual static capillaroscopy image.*
+
+**Implementation note:** The diagram is a high-level schematic. For exact computational specifications, the Python source takes precedence: the disease classifier uses a **768-dimensional representation** formed from the 384-dimensional CLS token and mean patch embedding, with a **two-logit output** for Healthy/T2DM (rather than a literal single-neuron `FC(1)` head). The temporal network consumes **384-dimensional frame embeddings** but projects them into a **256-dimensional Transformer hidden space** (the diagram's `d=384` refers to the frame-feature dimension, not the Transformer hidden width). These distinctions are reflected in the table below.
+
+### Architecture and hyperparameters
 
 | Component | Setting reflected in the supplied code |
 | --- | --- |
@@ -240,3 +253,6 @@ The experiments address **Healthy vs. T2DM** using the available nailfold datase
 
 The implementation uses [Ultralytics YOLO11](https://github.com/ultralytics/ultralytics), [DINOv2](https://github.com/facebookresearch/dinov2), [Hugging Face Transformers](https://huggingface.co/docs/transformers), and PyTorch. Follow each source project's applicable license and usage terms.
 
+## License
+
+**No code license has been specified by the manuscript or the uploaded files.** The repository owner should add a `LICENSE` file once the intended open-source terms are selected. Dataset and pretrained model licensing are separate from the code license.
