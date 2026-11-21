@@ -156,7 +156,7 @@ The final disease evaluation calculates image-level AUROC and participant-level 
 The following implementation schematic illustrates the morphology-localization pathway, DINOv2-based structural representation learning, static-image classification, video-based temporal regularization, and final parameter-efficient adaptation. It complements the methodology overview above by highlighting the model components, input dimensions, and LoRA configuration.
 
 <p align="center">
-  <img src="assets/implementation_architecture.png" alt="Detailed model implementation architecture showing capillary morphology localization with YOLO11s, DINOv2-Small morphology-to-disease knowledge transfer, eight-frame temporal modeling, and a final image-only LoRA-adapted classifier." width="100%">
+  <img src="assets/implementation-architecture.png" alt="Detailed model implementation architecture showing capillary morphology localization with YOLO11s, DINOv2-Small morphology-to-disease knowledge transfer, eight-frame temporal modeling, and a final image-only LoRA-adapted classifier." width="100%">
 </p>
 
 *Implementation architecture schematic. Temporal information regularizes the shared image encoder during training; the trained model performs Healthy-versus-T2DM inference from an individual static capillaroscopy image.*
